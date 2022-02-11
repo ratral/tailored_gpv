@@ -1,0 +1,49 @@
+---
+title: "White Paper for the design of Tailored of Plunger Valves."
+author: "Dr. Raúl Trujillo Álvarez"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: 
+   pdf_document:
+    toc: true
+    toc_depth: 2
+    number_sections: true
+    fig_width: 7
+    fig_height: 6
+    fig_caption: true
+    df_print: kable
+    highlight: tango
+bibliography: ["references.bib", "norms.bib"] 
+csl: din-1505-2-numeric-alphabetical.csl
+citation_package: biblatex
+link-citations: yes
+abstract: "The scope of this With paper is to provide guidelines for designing the Inherent Control Valve Flow Characteristics in such a way as to allow linear Installed Control Valve Flow Characteristics."
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, 
+                      message = FALSE, 
+                      warning = FALSE)
+
+
+library(bibtex) # https://monashdatafluency.github.io/r-rep-res/citations.html
+library(tidyverse)
+
+```
+
+# Scope
+
+
+# Basic definitions
+
+Basic terminology used herein is based on definitions stated in "Control Valve Terminology" [-@ANSI_ISA-75.05.01_2000_R2005] or applicable IEC standards.
+
+- Flow coefficient: Flow coefficient is a constant ($K_v$) related to the geometry of a valve plus cylinder (obturator) for a given valve opening that can be used to predict flow rate; see ANSI/ISA-75.01.01 (IEC 60534-2-1 Mod)-2007, "Flow Equations for Sizing Control Valves," [-@ANSI_ISA-75.01.01_2007] and ANSI/ISA-75.02.01-2008, "Control Valve Capacity Test Procedures" [-@ANSI_ISA-75.02.01_2008].
+
+
+
+
+ 
+
+
+# Reference
+
