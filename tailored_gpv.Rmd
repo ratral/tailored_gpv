@@ -16,7 +16,7 @@ bibliography: ["references.bib", "norms.bib"]
 csl: din-1505-2-numeric-alphabetical.csl
 citation_package: biblatex
 link-citations: yes
-abstract: "The scope of this With paper is to provide guidelines for designing the Inherent Control Valve Flow Characteristics in such a way as to allow linear Installed Control Valve Flow Characteristics."
+abstract: "The scope of this With paper is to provide guidelines for designing the Inherent Control Valve Flow Characteristics in such a way as to allow linear Installed Flow Characteristics."
 ---
 
 ```{r setup, include=FALSE}
@@ -32,17 +32,22 @@ library(tidyverse)
 
 # Scope
 
+The inherent and installed flow characteristic, the relationship between flow coefficient and valve stroke, has been a subject of misunderstandings and endless debate with water transport and distribution systems operators. 
+
+The control valves must be analyzed from the perspective of their *inherent characteristics* and their system behavior (*Installed characteristics*). The *“inherent flow characteristic”* is the relationship between the flow rate through a valve and the travel of the closure member as the closure member is moved from the closed position to-rated travel with a constant pressure drop across the valve. *The Inherent flow characteristics* are determined under laboratory conditions. But, what interests hydraulic design engineers, control engineers, and automation engineers are *the installed flow characteristics*. *“The Installed flow characteristics”* include both the valve and pipeline effects. In other words, One crucial requirement in selecting the proper control valve is ensuring that the valve has the properly *installed flow characteristic*. *The installed flow characteristic* usually differs from the inherent due to changes in pressure drop: as flow increases, there is less pressure drop available across the valve. It’s generally desirable to have a linear installed characteristic.
 
 # Basic definitions
 
 Basic terminology used herein is based on definitions stated in "Control Valve Terminology" [-@ANSI_ISA-75.05.01_2000_R2005] or applicable IEC standards.
 
-- Flow coefficient: Flow coefficient is a constant ($K_v$) related to the geometry of a valve plus cylinder (obturator) for a given valve opening that can be used to predict flow rate; see ANSI/ISA-75.01.01 (IEC 60534-2-1 Mod)-2007, "Flow Equations for Sizing Control Valves," [-@ANSI_ISA-75.01.01_2007] and ANSI/ISA-75.02.01-2008, "Control Valve Capacity Test Procedures" [-@ANSI_ISA-75.02.01_2008].
+- **Flow coefficient:** Flow coefficient is a constant ($K_v$) related to the geometry of a valve plus cylinder (obturator) for a given valve opening that can be used to predict flow rate; see ANSI/ISA-75.01.01 (IEC 60534-2-1 Mod)-2007, "Flow Equations for Sizing Control Valves," [@ANSI_ISA-75.01.01_2007] and ANSI/ISA-75.02.01-2008, "Control Valve Capacity Test Procedures" [-@ANSI_ISA-75.02.01_2008].
 
+- **Inherent flow characteristic:** The Inherent flow characteristic is the relationship between the flow rate through a valve and the travel of the closure member as the closure member is moved from the closed position to-rated travel with a constant pressure drop across the valve [@ISA-75.11_2013]. The Inherent flow characteristics are determined under laboratory conditions by testing the valve flow versus valve position or travel using a constant differential pressure drop across the valve through the test. Manufacturers publish the inherent flow characteristics for each control valve plus the cylinder. The Inherent flow characteristics are standardized for a fixed pressure drop as defined using the valve flow coefficient value $K_v$. 
 
+- **Inherent flow characteristic curves:** Control valves can be mounted with different cylinders in such a way as to present different performance curves for the percentage of rated $K_{v_{max}}$ versus the percent of rated travel of the cylinder. There are three basic characteristics: Quick opening; Linear and Equal percentage.
 
+- **Relative flow coefficient ($\phi$):**  The relative flow coefficient is the flow coefficient ($K_{v_{max}}$) ratio at a stated full open to the flow coefficient ($K_{v}$) at rated travel [@ISA-75.11_2013].
 
- 
 
 
 # Reference
