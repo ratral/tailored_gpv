@@ -20,14 +20,10 @@ abstract: "The scope of this With paper is to provide guidelines for designing t
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE, 
-                      message = FALSE, 
-                      warning = FALSE)
-
-
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
 library(bibtex) # https://monashdatafluency.github.io/r-rep-res/citations.html
 library(tidyverse)
-
+library(here)
 ```
 
 # Scope
@@ -47,6 +43,20 @@ Basic terminology used herein is based on definitions stated in "Control Valve T
 - **Inherent flow characteristic curves:** Control valves can be mounted with different cylinders in such a way as to present different performance curves for the percentage of rated $K_{v_{max}}$ versus the percent of rated travel of the cylinder. There are three basic characteristics: Quick opening; Linear and Equal percentage.
 
 - **Relative flow coefficient ($\phi$):**  The relative flow coefficient is the flow coefficient ($K_{v_{max}}$) ratio at a stated full open to the flow coefficient ($K_{v}$) at rated travel [@ISA-75.11_2013].
+
+
+# Example A
+
+It is a simple water transport system between two reservoirs, which are $500 \; meters$ apart, and the elevation of the deposits is $100$ and $5 \; meters$, respectively. Before the entrance to the second tank, a control valve has been installed (see Flow Schematic).
+
+```{r figure_sample_01, out.width='100%', fig.align='center', fig.cap='Flow Schematic'}
+    knitr::include_graphics(here::here("images","figure_01.jpg"))
+```
+
+
+
+
+
 
 
 

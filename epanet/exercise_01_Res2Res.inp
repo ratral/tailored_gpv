@@ -1,0 +1,185 @@
+[TITLE]
+Example 001 V.00.00.1
+system_properties: regulation with constant pressure
+Typ: Reservoir to reservoir
+Modell_Name: Res2Res_V001
+
+[JUNCTIONS]
+;ID              	Elev        	Demand      	Pattern         
+ JT_0001         	95          	0           	                	;
+ JT_0002         	95          	0           	                	;
+ JT_0003         	0           	0           	                	;
+ JT_0004         	0           	0           	                	;
+ JT_0006         	0           	0           	                	;
+ JT_0007         	0           	0           	                	;
+ JT_0009         	0           	0           	                	;
+ JT_0005         	0           	0           	                	;
+ JT_0008         	0           	0           	                	;
+
+[RESERVOIRS]
+;ID              	Head        	Pattern         
+ RES_001         	100         	                	;
+ RES_002         	5           	                	;
+
+[TANKS]
+;ID              	Elevation   	InitLevel   	MinLevel    	MaxLevel    	Diameter    	MinVol      	VolCurve        	Overflow
+
+[PIPES]
+;ID              	Node1           	Node2           	Length      	Diameter    	Roughness   	MinorLoss   	Status
+ PL_0001         	RES_001         	JT_0001         	1           	250         	0.015       	1           	Open  	;
+ PL_0002         	JT_0002         	JT_0003         	250         	250         	0.015       	2           	Open  	;
+ PL_0003         	JT_0003         	JT_0004         	250         	250         	0.015       	2           	Open  	;
+ Reducer         	JT_0005         	JT_0006         	1           	250         	0.015       	0           	Open  	;
+ Diffuser        	JT_0007         	JT_0008         	1           	250         	0.015       	0           	Open  	;
+ PL_0004         	JT_0009         	RES_002         	5           	250         	0.015       	2.5         	Open  	;
+
+[PUMPS]
+;ID              	Node1           	Node2           	Parameters
+
+[VALVES]
+;ID              	Node1           	Node2           	Diameter    	Type	Setting     	MinorLoss   
+ RIKO            	JT_0006         	JT_0007         	250         	TCV 	350         	0           	;
+ GV_0001         	JT_0001         	JT_0002         	250         	TCV 	0.233       	0           	;
+ GV_0002         	JT_0004         	JT_0005         	250         	TCV 	0.233       	0           	;
+ GV_0003         	JT_0008         	JT_0009         	250         	TCV 	0.233       	0           	;
+
+[TAGS]
+
+[DEMANDS]
+;Junction        	Demand      	Pattern         	Category
+
+[STATUS]
+;ID              	Status/Setting
+ RIKO            	Open
+
+[PATTERNS]
+;ID              	Multipliers
+
+[CURVES]
+;ID              	X-Value     	Y-Value
+
+[CONTROLS]
+; Initial position time 0
+LINK RIKO 1.28 AT TIME 0
+LINK RIKO 1.56 AT TIME 1
+LINK RIKO 1.92 AT TIME 2
+LINK RIKO 2.39 AT TIME 3
+LINK RIKO 3.01 AT TIME 4
+LINK RIKO 3.86 AT TIME 5
+LINK RIKO 5.03 AT TIME 6
+LINK RIKO 6.69 AT TIME 7
+LINK RIKO 9.09 AT TIME 8
+LINK RIKO 12.7 AT TIME 9
+LINK RIKO 18.32 AT TIME 10
+LINK RIKO 27.47 AT TIME 11
+LINK RIKO 43.19 AT TIME 12
+LINK RIKO 72.14 AT TIME 13
+LINK RIKO 130.43 AT TIME 14
+LINK RIKO 262.79 AT TIME 15
+LINK RIKO 619.36 AT TIME 16
+LINK RIKO 1870.59 AT TIME 17
+LINK RIKO 8882.77 AT TIME 18
+
+
+[RULES]
+
+
+[ENERGY]
+ Global Efficiency  	75
+ Global Price       	0
+ Demand Charge      	0
+
+[EMITTERS]
+;Junction        	Coefficient
+
+[QUALITY]
+;Node            	InitQual
+
+[SOURCES]
+;Node            	Type        	Quality     	Pattern
+
+[REACTIONS]
+;Type     	Pipe/Tank       	Coefficient
+
+
+[REACTIONS]
+ Order Bulk            	1
+ Order Tank            	1
+ Order Wall            	1
+ Global Bulk           	0
+ Global Wall           	0
+ Limiting Potential    	0
+ Roughness Correlation 	0
+
+[MIXING]
+;Tank            	Model
+
+[TIMES]
+ Duration           	18:00
+ Hydraulic Timestep 	1:00
+ Quality Timestep   	0:05 
+ Pattern Timestep   	1:00 
+ Pattern Start      	0:00 
+ Report Timestep    	1:00 
+ Report Start       	0:00 
+ Start ClockTime    	12 am
+ Statistic          	NONE
+
+[REPORT]
+ Status             	No
+ Summary            	No
+ Page               	0
+
+[OPTIONS]
+ Units              	LPS
+ Headloss           	D-W
+ Specific Gravity   	1
+ Viscosity          	1.01552783053606
+ Trials             	1000
+ Accuracy           	0.00001
+ CHECKFREQ          	2
+ MAXCHECK           	10
+ DAMPLIMIT          	0
+ Unbalanced         	STOP
+ Pattern            	RES_LEV
+ Demand Multiplier  	1.0
+ Emitter Exponent   	0.5
+ Quality            	NONE mg/L
+ Diffusivity        	1
+ Tolerance          	0.01
+
+[COORDINATES]
+;Node            	X-Coord           	Y-Coord
+JT_0001         	-2039.560         	9000.000          
+JT_0002         	-1975.930         	9000.000          
+JT_0003         	-1595.910         	8650.000          
+JT_0004         	-1040.250         	8650.000          
+JT_0006         	-919.000          	8650.000          
+JT_0007         	-836.350          	8650.000          
+JT_0009         	-701.980          	8649.950          
+JT_0005         	-978.630          	8650.000          
+JT_0008         	-774.740          	8650.000          
+RES_001         	-2105.660         	9000.000          
+RES_002         	-605.570          	8650.000          
+
+[VERTICES]
+;Link            	X-Coord           	Y-Coord
+
+[LABELS]
+;X-Coord             Y-Coord             Label & Anchor Node
+-936.060          	8682.150          	"CONTROL VALVE"	
+-2041.810         	9030.570          	"Gate"	
+-1025.690         	8682.150          	"Gate"	
+-754.570          	8683.270          	"Gate"	
+-974.150          	8638.460          	"Reducer"	
+-826.270          	8641.820          	"Diffuser"	
+-2130.310         	9030.566          	"Res. 01"	
+-625.735          	8683.270          	"Res. 02"	
+
+[BACKDROP]
+  DIMENSIONS  	-2312.920         	8631.240          	-317.650          	9097.160          
+ UNITS          	Meters
+ FILE           	
+ OFFSET         	0.00            	0.00            
+
+[END]
