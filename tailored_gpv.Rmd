@@ -3,7 +3,7 @@ title: "White Paper for the design of Tailored of Plunger Valves."
 author: "Dr. Raúl Trujillo Álvarez"
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 output: 
-   pdf_document:
+   html_document:
     toc: true
     toc_depth: 2
     number_sections: true
@@ -24,6 +24,20 @@ knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
 library(bibtex) # https://monashdatafluency.github.io/r-rep-res/citations.html
 library(tidyverse)
 library(here)
+library(hyd4gpv)
+library(latex2exp)
+library(glue)
+library(knitr)
+library(gridExtra)
+library(plotly)
+library(gt)
+
+source(here::here("R", "plot_kv_kvs.R"))
+source(here::here("R", "plot_kv.R"))
+source(here::here("R", "plot_zv.R"))
+
+source(here::here("R", "plotly_kv.R"))
+source(here::here("R", "plotly_zv.R"))
 ```
 
 # Scope
@@ -52,7 +66,44 @@ It is a simple water transport system between two reservoirs, which are $500 \; 
 ```{r figure_sample_01, out.width='100%', fig.align='center', fig.cap='Flow Schematic'}
     knitr::include_graphics(here::here("images","figure_01.jpg"))
 ```
+```{r}
+  dn <- 250 # Diameter of the valve 
 
+  tb <- hyd4gpv:::gpv_data %>% 
+    filter(brand == "AVK-AC.MOO-PAM" & cyl_name == "PSEG" & dn_min <= dn & dn <= dn_max) %>% 
+    select(description_en, kv_b, kv_d, kv_e, zvs, fls)
+```
+
+Without the control system, the maximum flow possible the line gives and losses due to fittings and pipe are $370.53\;l/s$. If a "Standard" plunger control valve with a flat portable cylinder is installed in the system, the maximum flow that will circulate through the transport systems will be $369.18\; l/s$ -with a Zeta value of $\zeta_{100\%}=3.8$ and an additional gate valve with a Zeta value of $\zeta_{gate}=0.233$.
+
+
+```{r figure_kv_01}
+  plotly_kv( tb$kv_b, tb$kv_d, tb$kv_e, dn, tb$zvs, glue("Standrd ",tb$description_en))
+```
+
+```{r figure_zv_01}
+  plotly_zv( tb$kv_b, tb$kv_d, tb$kv_e, dn, tb$zvs, glue("Standrd ",tb$description_en))
+```
+
+
+
+```{r}
+  tb.kv <- tibble(position = seq(10,100,by=5)) %>% 
+    mutate(kv = drm_LL3(position, tb$kv_b, tb$kv_d, tb$kv_e)*kv_value(dn, tb$zvs)/3.6,
+           zv = zv_function(position, tb$kv_b, tb$kv_d, tb$kv_e, tb$zvs),
+           position = position/100)
+
+  tb.kv %>%
+    gt() %>% 
+    tab_header(title    = md("Kv and Zeta Value"),
+               subtitle = md("depending on valve position")) %>%
+    cols_label(position = md("Valve Position"),
+               kv = md("Kv (l/s)"),
+               zv = md("Zv (-)")) %>% 
+    fmt_percent(columns = position, decimals = 0) %>% 
+    fmt_number(columns = c(kv, zv), decimals = 1) %>% 
+    opt_align_table_header(align ="left")
+```
 
 
 
