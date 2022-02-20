@@ -1,4 +1,4 @@
-  Page 1                                    Sun Feb 20 06:40:08 2022
+  Page 1                                    Sun Feb 20 17:47:11 2022
 
   ******************************************************************
   *                           E P A N E T                          *
@@ -7,7 +7,7 @@
   *                         Version 2.2                            *
   ******************************************************************
   
-  Analysis begun Sun Feb 20 06:40:08 2022
+  Analysis begun Sun Feb 20 17:47:11 2022
 
    
   Hydraulic Status:
@@ -532,6 +532,61 @@
                         maximum  head error  = 0.0000 for Link PL_0003
 
     45:00:00: Balanced after 5 trials
+   
+    46:00:00: TCV RIKO changed by timer control
+    46:00:00: Balancing the network:
+
+              Trial  1: relative flow change = 0.580208
+              Trial  2: relative flow change = 0.202383
+              Trial  3: relative flow change = 0.020907
+              Trial  4: relative flow change = 0.000219
+              Trial  5: relative flow change = 0.000000
+                        maximum  flow change = 0.0000 for Link Diffuser
+                        maximum  head error  = 0.0000 for Link RIKO
+
+    46:00:00: Balanced after 5 trials
+   
+    47:00:00: TCV RIKO changed by timer control
+    47:00:00: Balancing the network:
+
+              Trial  1: relative flow change = 0.693875
+              Trial  2: relative flow change = 0.317055
+              Trial  3: relative flow change = 0.052922
+              Trial  4: relative flow change = 0.001402
+              Trial  5: relative flow change = 0.000001
+                        maximum  flow change = 0.0000 for Link GV_0001
+                        maximum  head error  = 0.0000 for Link RIKO
+
+    47:00:00: Balanced after 5 trials
+   
+    48:00:00: TCV RIKO changed by timer control
+    48:00:00: Balancing the network:
+
+              Trial  1: relative flow change = 0.835571
+              Trial  2: relative flow change = 0.536308
+              Trial  3: relative flow change = 0.167970
+              Trial  4: relative flow change = 0.014309
+              Trial  5: relative flow change = 0.000102
+              Trial  6: relative flow change = 0.000000
+                        maximum  flow change = 0.0000 for Link Reducer
+                        maximum  head error  = 0.0000 for Link RIKO
+
+    48:00:00: Balanced after 6 trials
+   
+    49:00:00: TCV RIKO changed by timer control
+    49:00:00: Balancing the network:
+
+              Trial  1: relative flow change = 0.968203
+              Trial  2: relative flow change = 0.882205
+              Trial  3: relative flow change = 0.637045
+              Trial  4: relative flow change = 0.254569
+              Trial  5: relative flow change = 0.033485
+              Trial  6: relative flow change = 0.000562
+              Trial  7: relative flow change = 0.000000
+                        maximum  flow change = 0.0000 for Link PL_0003
+                        maximum  head error  = 0.0000 for Link RIKO
+
+    49:00:00: Balanced after 7 trials
    
    
   Node Results at 0:00:00 hrs:
@@ -1315,4 +1370,72 @@
   ----------------------------------------------
   RIKO                 4.18      0.09     94.98  TCV
    
-  Analysis ended Sun Feb 20 06:40:08 2022
+   
+  Node Results at 46:00:00 hrs:
+  ----------------------------------------------
+                     Demand      Head  Pressure
+  Node                  L/s         m         m
+  ----------------------------------------------
+  JT_0006              0.00     99.99     99.99
+  JT_0007              0.00      5.00      5.00
+   
+   
+  Link Results at 46:00:00 hrs:
+  ----------------------------------------------
+                       Flow  Velocity  Headloss
+  Link                  L/s       m/s    /1000m
+  ----------------------------------------------
+  RIKO                 2.15      0.04     94.99  TCV
+   
+   
+  Node Results at 47:00:00 hrs:
+  ----------------------------------------------
+                     Demand      Head  Pressure
+  Node                  L/s         m         m
+  ----------------------------------------------
+  JT_0006              0.00    100.00    100.00
+  JT_0007              0.00      5.00      5.00
+   
+   
+  Link Results at 47:00:00 hrs:
+  ----------------------------------------------
+                       Flow  Velocity  Headloss
+  Link                  L/s       m/s    /1000m
+  ----------------------------------------------
+  RIKO                 0.92      0.02     95.00  TCV
+   
+   
+  Node Results at 48:00:00 hrs:
+  ----------------------------------------------
+                     Demand      Head  Pressure
+  Node                  L/s         m         m
+  ----------------------------------------------
+  JT_0006              0.00    100.00    100.00
+  JT_0007              0.00      5.00      5.00
+   
+   
+  Link Results at 48:00:00 hrs:
+  ----------------------------------------------
+                       Flow  Velocity  Headloss
+  Link                  L/s       m/s    /1000m
+  ----------------------------------------------
+  RIKO                 0.27      0.01     95.00  TCV
+   
+   
+  Node Results at 49:00:00 hrs:
+  ----------------------------------------------
+                     Demand      Head  Pressure
+  Node                  L/s         m         m
+  ----------------------------------------------
+  JT_0006              0.00    100.00    100.00
+  JT_0007              0.00      5.00      5.00
+   
+   
+  Link Results at 49:00:00 hrs:
+  ----------------------------------------------
+                       Flow  Velocity  Headloss
+  Link                  L/s       m/s    /1000m
+  ----------------------------------------------
+  RIKO                 0.03      0.00     95.00  TCV
+   
+  Analysis ended Sun Feb 20 17:47:11 2022

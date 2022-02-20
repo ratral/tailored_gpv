@@ -15,7 +15,7 @@
 #'
 plotly_zv <- function(b, d, e, dn, zvs, cylindertyp){
   
-  data.zeta <- tibble(position = 10:100)%>%
+  data.zeta <- tibble(position = 2:100)%>%
     mutate(zeta = map_dbl(.x = .data$position, ~zv_function( .x, b, d, e, zvs)))
   
   h.template <- paste( "Loss Coeficiente: %{y:.1f}<br>",
@@ -27,7 +27,7 @@ plotly_zv <- function(b, d, e, dn, zvs, cylindertyp){
                type = "scatter", mode = "lines",
                hovertemplate = h.template) %>%
     layout( title = paste("Zeta Value for ", cylindertyp),
-            xaxis = list(title = plotly::TeX("\\text{Valve Position } (\\%)"), dtick = 10),
+            xaxis = list(title = plotly::TeX("\\text{Valve Position } (\\%)"), dtick = 0),
             yaxis = list(title = plotly::TeX("\\text{Zeta Value } (\\zeta)"), type = "log", tickformat = "0.1e"),
             showlegend = FALSE) %>%
     config(displayModeBar = FALSE, mathjax = 'cdn')

@@ -104,12 +104,12 @@ Without the control system, the maximum flow possible the line gives and losses 
   # loss coefficient of the RIKO control valve (link TCV throttle control valve) 
   # for the different opening positions of the valve.
   # 
-  # tb.kv <- tibble(position = seq(10,100,by=2)) %>%
+  # tb.kv <- tibble(position = seq(2,100,by=2)) %>%
   #   mutate(zv = zv_function(position, tb$kv_b, tb$kv_d, tb$kv_e, tb$zvs)) %>%
-  #   select(zv) %>%
+  #   select(position, zv) %>%
   #   mutate(zv = round(zv,2)) %>% arrange(zv) %>%
   #   mutate(time = seq(0, length(zv)-1, 1)) %>%
-  #   mutate(controls = glue('LINK RIKO {zv} AT TIME {time}')) %>%
+  #   mutate(controls = glue('LINK RIKO {zv} AT TIME {time}; {position}% opening')) %>%
   #   select(controls) %>%
   #   write_csv(here::here("epanet","PSEG_250.csv"), col_names = FALSE)
 
@@ -138,7 +138,7 @@ Without the control system, the maximum flow possible the line gives and losses 
   
   tb.system <- nodes %>% 
     full_join(links, by="position") %>% 
-    mutate(position      = seq(100, 10, by = -2), 
+    mutate(position      = 100 - position * 2, 
            kv.valve      = kv(p1, p2, flow),
            kv.syst       = kv(100, 5, flow),
            kv.valve.rel  = kv.valve/max(kv.valve)*100,
@@ -173,7 +173,22 @@ Without the control system, the maximum flow possible the line gives and losses 
 ## Relative Flow coeficiente of the Control Valve and the System
 
 ```{r}
+  h.template <- paste( "Relative Flow Capacity: %{y:,.1f}%<br>",
+                       "Valve Position: %{x:.1f}%",
+                       "<extra></extra>")
 
+  p <- plot_ly(tb.system, x = ~position) %>%  
+    add_trace(y = ~kv.valve.rel, name = 'Valve',  mode = 'lines', hovertemplate = h.template) %>% 
+    add_trace(y = ~kv.syst.rel,  name = 'System', mode = 'lines', hovertemplate = h.template) %>% 
+    add_trace(y = ~position,     name = 'Linear', mode = 'lines', hovertemplate = h.template) %>%
+    layout( title = list(text = 'Relative Flow Capacity of the Control Valve and the System'),
+            xaxis = list( title = plotly::TeX("\\text{Valve Position } (\\%)"), dtick = 10, range = list(0, 100)),
+            yaxis = list( title = plotly::TeX("K_v/K_{vs} \\; (\\%)"), dtick = 10, range = list(0, 100)),
+            showlegend = TRUE) %>%
+    config(displayModeBar = FALSE, mathjax = 'cdn')
+
+  suppressMessages(plotly_build(p))
+  
 ```
 
 # Reference
