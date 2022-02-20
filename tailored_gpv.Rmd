@@ -4,6 +4,8 @@ author: "Dr. Raúl Trujillo Álvarez"
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 output: 
    html_document:
+    theme:
+      version: 5
     toc: true
     toc_depth: 2
     number_sections: true
@@ -20,17 +22,29 @@ abstract: "The scope of this With paper is to provide guidelines for designing t
 ---
 
 ```{r setup, include=FALSE}
+
+if (requireNamespace("thematic")) thematic::thematic_rmd(font = "auto")
+
 knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
+
 library(bibtex) # https://monashdatafluency.github.io/r-rep-res/citations.html
 library(tidyverse)
 library(here)
-library(hyd4gpv)
-library(latex2exp)
+library(plotly)
+
+library(stringr)
 library(glue)
+
 library(knitr)
 library(gridExtra)
-library(plotly)
-library(gt)
+
+library(bslib)
+library(thematic)
+library(showtext)
+
+library(hyd4gpv)
+library(epanet2toolkit)
+library(epanetReader)
 
 source(here::here("R", "plot_kv_kvs.R"))
 source(here::here("R", "plot_kv.R"))
@@ -38,6 +52,7 @@ source(here::here("R", "plot_zv.R"))
 
 source(here::here("R", "plotly_kv.R"))
 source(here::here("R", "plotly_zv.R"))
+
 ```
 
 # Scope
@@ -76,40 +91,90 @@ It is a simple water transport system between two reservoirs, which are $500 \; 
 
 Without the control system, the maximum flow possible the line gives and losses due to fittings and pipe are $370.53\;l/s$. If a "Standard" plunger control valve with a flat portable cylinder is installed in the system, the maximum flow that will circulate through the transport systems will be $369.18\; l/s$ -with a Zeta value of $\zeta_{100\%}=3.8$ and an additional gate valve with a Zeta value of $\zeta_{gate}=0.233$.
 
-
-```{r figure_kv_01}
-  plotly_kv( tb$kv_b, tb$kv_d, tb$kv_e, dn, tb$zvs, glue("Standrd ",tb$description_en))
-```
+## Loss coefficient $(\zeta)$ of the control valve (link TCV throttle control valve) 
 
 ```{r figure_zv_01}
   plotly_zv( tb$kv_b, tb$kv_d, tb$kv_e, dn, tb$zvs, glue("Standrd ",tb$description_en))
 ```
 
 
-
 ```{r}
-  tb.kv <- tibble(position = seq(10,100,by=5)) %>% 
-    mutate(kv = drm_LL3(position, tb$kv_b, tb$kv_d, tb$kv_e)*kv_value(dn, tb$zvs)/3.6,
-           zv = zv_function(position, tb$kv_b, tb$kv_d, tb$kv_e, tb$zvs),
-           position = position/100)
 
-  tb.kv %>%
-    gt() %>% 
-    tab_header(title    = md("Kv and Zeta Value"),
-               subtitle = md("depending on valve position")) %>%
-    cols_label(position = md("Valve Position"),
-               kv = md("Kv (l/s)"),
-               zv = md("Zv (-)")) %>% 
-    fmt_percent(columns = position, decimals = 0) %>% 
-    fmt_number(columns = c(kv, zv), decimals = 1) %>% 
-    opt_align_table_header(align ="left")
+  # This part has the purpose of defining the controls that modify the 
+  # loss coefficient of the RIKO control valve (link TCV throttle control valve) 
+  # for the different opening positions of the valve.
+  # 
+  # tb.kv <- tibble(position = seq(10,100,by=2)) %>%
+  #   mutate(zv = zv_function(position, tb$kv_b, tb$kv_d, tb$kv_e, tb$zvs)) %>%
+  #   select(zv) %>%
+  #   mutate(zv = round(zv,2)) %>% arrange(zv) %>%
+  #   mutate(time = seq(0, length(zv)-1, 1)) %>%
+  #   mutate(controls = glue('LINK RIKO {zv} AT TIME {time}')) %>%
+  #   select(controls) %>%
+  #   write_csv(here::here("epanet","PSEG_250.csv"), col_names = FALSE)
+
+  # runs a complete EPANET simulation
+  ENepanet(here::here("epanet","exercise_01_Res2Res.inp"),
+           here::here("epanet","exercise_01_Res2Res.rpt"))
+  
+  # reads an Epanet .rpt file into R
+  n1r <- read.rpt(here::here("epanet","exercise_01_Res2Res.rpt")) 
+  
+  # Read the information of the nodes 
+  nodes <- as_tibble(n1r$nodeResults) %>% 
+    select(ID, Pressure, position = Timestamp) %>% 
+    mutate(position = as.integer(str_extract(position, "^(\\d+)*")),
+           Pressure = Pressure/10,
+           ID = case_when( ID == 'JT_0006' ~ 'p1',
+                           ID == 'JT_0007' ~ 'p2',
+                           TRUE ~ 'Neither-p1-Nor-p2')) %>% 
+    pivot_wider(names_from = ID, values_from = Pressure)
+  
+  links <- as_tibble(n1r$linkResults) %>% 
+    select(position = Timestamp, dp = Headloss, flow = Flow,   velocity = Velocity) %>% 
+    mutate(position = as.integer(str_extract(position, "^(\\d+)*")),
+           flow = flow * 3.6,
+           dp = dp/10) 
+  
+  tb.system <- nodes %>% 
+    full_join(links, by="position") %>% 
+    mutate(position      = seq(100, 10, by = -2), 
+           kv.valve      = kv(p1, p2, flow),
+           kv.syst       = kv(100, 5, flow),
+           kv.valve.rel  = kv.valve/max(kv.valve)*100,
+           kv.syst.rel   = kv.syst/max(kv.syst)*100
+    )
+  
+  rm(nodes, links)
 ```
 
+## Flow coeficiente of the Control Valve and the System
 
+```{r}
 
+  h.template <- paste( "Flow Coefficient: %{y:,.1f} m³/h<br>",
+                       "Valve Position: %{x:.1f}%",
+                       "<extra></extra>")
+  
+  p <- plot_ly(tb.system, x = ~position) %>%  
+    add_trace(y = ~kv.valve, name = 'trace 0', mode = 'lines',
+               hovertemplate = h.template) %>% 
+    add_trace(y = ~kv.syst,  name = 'trace 0', mode = 'lines',
+               hovertemplate = h.template) %>%
+    layout( title = list(text = 'Flow coeficiente of the Control Valve and the System'),
+            xaxis = list( title = plotly::TeX("\\text{Valve Position } (\\%)"), dtick = 10, range = list(0, 100)),
+            yaxis = list( title = plotly::TeX("K_v \\; [m^3/h][bar]"), type = "log"),
+            showlegend = TRUE) %>%
+    config(displayModeBar = FALSE, mathjax = 'cdn')
 
+  suppressMessages(plotly_build(p))
+```
 
+## Relative Flow coeficiente of the Control Valve and the System
 
+```{r}
+
+```
 
 # Reference
 

@@ -26,9 +26,9 @@ plotly_zv <- function(b, d, e, dn, zvs, cylindertyp){
     add_trace( data = data.zeta, x = ~position, y = ~zeta,
                type = "scatter", mode = "lines",
                hovertemplate = h.template) %>%
-    layout( title = paste("Valve typ:", cylindertyp),
-            xaxis = list(title = TeX("\\text{Valve Position } (\\%)"), dtick = 10),
-            yaxis = list(title = TeX("\\text{Zeta Value } (\\zeta)"), type = "log", tickformat = "0.1e"),
+    layout( title = paste("Zeta Value for ", cylindertyp),
+            xaxis = list(title = plotly::TeX("\\text{Valve Position } (\\%)"), dtick = 10),
+            yaxis = list(title = plotly::TeX("\\text{Zeta Value } (\\zeta)"), type = "log", tickformat = "0.1e"),
             showlegend = FALSE) %>%
     config(displayModeBar = FALSE, mathjax = 'cdn')
   
