@@ -137,12 +137,13 @@ Without the control system, the maximum flow possible the line gives and losses 
            dp = dp/10) 
   
   tb.system <- nodes %>% 
-    full_join(links, by="position") %>% 
-    mutate(position      = 100 - position * 2, 
-           kv.valve      = kv(p1, p2, flow),
-           kv.syst       = kv(100, 5, flow),
-           kv.valve.rel  = kv.valve/max(kv.valve)*100,
-           kv.syst.rel   = kv.syst/max(kv.syst)*100
+    full_join(links, by ="position") %>% 
+    mutate(position     = 100 - position * 2, 
+           kv.valve     = kv(p1, p2, flow),
+           kv.syst      = kv(100, 5, flow),
+           kv.valve.rel = kv.valve/max(kv.valve)*100,
+           kv.syst.rel  = kv.syst/max(kv.syst)*100,
+           flow.lineal  = position/100 * max(flow)
     )
   
   rm(nodes, links)
@@ -157,14 +158,24 @@ Without the control system, the maximum flow possible the line gives and losses 
                        "<extra></extra>")
   
   p <- plot_ly(tb.system, x = ~position) %>%  
-    add_trace(y = ~kv.valve, name = 'trace 0', mode = 'lines',
-               hovertemplate = h.template) %>% 
-    add_trace(y = ~kv.syst,  name = 'trace 0', mode = 'lines',
-               hovertemplate = h.template) %>%
+    add_trace(y = ~kv.valve, 
+              name = 'Valve', 
+              mode = 'lines',
+              hovertemplate = h.template,
+              line = list(color = 'rgb(0,0,255)', width = 3)
+    ) %>% 
+    add_trace(y = ~kv.syst,
+              name = 'System',
+              mode = 'lines',
+              hovertemplate = h.template,
+              line = list(color = 'rgb(255,0,0)', width = 3)
+    ) %>%
     layout( title = list(text = 'Flow coeficiente of the Control Valve and the System'),
             xaxis = list( title = plotly::TeX("\\text{Valve Position } (\\%)"), dtick = 10, range = list(0, 100)),
             yaxis = list( title = plotly::TeX("K_v \\; [m^3/h][bar]"), type = "log"),
-            showlegend = TRUE) %>%
+            showlegend = TRUE,
+            legend = list(x = 0.1, y = 0.9)
+     ) %>%
     config(displayModeBar = FALSE, mathjax = 'cdn')
 
   suppressMessages(plotly_build(p))
@@ -178,18 +189,42 @@ Without the control system, the maximum flow possible the line gives and losses 
                        "<extra></extra>")
 
   p <- plot_ly(tb.system, x = ~position) %>%  
-    add_trace(y = ~kv.valve.rel, name = 'Valve',  mode = 'lines', hovertemplate = h.template) %>% 
-    add_trace(y = ~kv.syst.rel,  name = 'System', mode = 'lines', hovertemplate = h.template) %>% 
-    add_trace(y = ~position,     name = 'Linear', mode = 'lines', hovertemplate = h.template) %>%
+    add_trace(y = ~kv.valve.rel, 
+              name = 'Valve',  
+              mode = 'lines', 
+              hovertemplate = h.template,
+              line = list(color = 'rgb(0,0,255)', width = 3)
+    ) %>% 
+    add_trace(y = ~kv.syst.rel,
+              name = 'System', 
+              mode = 'lines', 
+              hovertemplate = h.template,
+              line = list(color = 'rgb(255,0,0)', width = 3)
+    ) %>% 
+    add_trace(y = ~position,     
+              name = 'Linear', 
+              showlegend = FALSE,
+              mode = 'lines', 
+              hovertemplate = h.template,
+              line = list(color = 'rgb(0,0,0)', width = 2, dash = 'dot')
+    ) %>%
     layout( title = list(text = 'Relative Flow Capacity of the Control Valve and the System'),
             xaxis = list( title = plotly::TeX("\\text{Valve Position } (\\%)"), dtick = 10, range = list(0, 100)),
             yaxis = list( title = plotly::TeX("K_v/K_{vs} \\; (\\%)"), dtick = 10, range = list(0, 100)),
-            showlegend = TRUE) %>%
+            showlegend = TRUE,
+            legend = list(x = 0.1, y = 0.9)
+     ) %>%
     config(displayModeBar = FALSE, mathjax = 'cdn')
 
   suppressMessages(plotly_build(p))
   
 ```
+
+## Ideal Flow coefficient of the Control Valve for a Linear behavior of the system
+
+
+
+
 
 # Reference
 

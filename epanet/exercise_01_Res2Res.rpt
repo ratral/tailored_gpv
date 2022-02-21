@@ -1,4 +1,4 @@
-  Page 1                                    Sun Feb 20 17:47:11 2022
+  Page 1                                    Mon Feb 21 14:52:01 2022
 
   ******************************************************************
   *                           E P A N E T                          *
@@ -7,7 +7,7 @@
   *                         Version 2.2                            *
   ******************************************************************
   
-  Analysis begun Sun Feb 20 17:47:11 2022
+  Analysis begun Mon Feb 21 14:52:01 2022
 
    
   Hydraulic Status:
@@ -258,7 +258,7 @@
               Trial  1: relative flow change = 0.024883
               Trial  2: relative flow change = 0.000300
               Trial  3: relative flow change = 0.000000
-                        maximum  flow change = 0.0000 for Link PL_0001
+                        maximum  flow change = 0.0000 for Link RIKO
                         maximum  head error  = 0.0000 for Link RIKO
 
     22:00:00: Balanced after 3 trials
@@ -269,7 +269,7 @@
               Trial  1: relative flow change = 0.029363
               Trial  2: relative flow change = 0.000418
               Trial  3: relative flow change = 0.000000
-                        maximum  flow change = 0.0000 for Link GV_0002
+                        maximum  flow change = 0.0000 for Link GV_0001
                         maximum  head error  = 0.0000 for Link RIKO
 
     23:00:00: Balanced after 3 trials
@@ -280,7 +280,7 @@
               Trial  1: relative flow change = 0.034487
               Trial  2: relative flow change = 0.000578
               Trial  3: relative flow change = 0.000000
-                        maximum  flow change = 0.0000 for Link RIKO
+                        maximum  flow change = 0.0000 for Link Reducer
                         maximum  head error  = 0.0000 for Link RIKO
 
     24:00:00: Balanced after 3 trials
@@ -291,7 +291,7 @@
               Trial  1: relative flow change = 0.040563
               Trial  2: relative flow change = 0.000801
               Trial  3: relative flow change = 0.000000
-                        maximum  flow change = 0.0001 for Link Diffuser
+                        maximum  flow change = 0.0001 for Link GV_0003
                         maximum  head error  = 0.0000 for Link RIKO
 
     25:00:00: Balanced after 3 trials
@@ -313,7 +313,7 @@
               Trial  1: relative flow change = 0.055803
               Trial  2: relative flow change = 0.001523
               Trial  3: relative flow change = 0.000001
-                        maximum  flow change = 0.0003 for Link PL_0001
+                        maximum  flow change = 0.0003 for Link Diffuser
                         maximum  head error  = 0.0000 for Link RIKO
 
     27:00:00: Balanced after 3 trials
@@ -324,7 +324,7 @@
               Trial  1: relative flow change = 0.065078
               Trial  2: relative flow change = 0.002076
               Trial  3: relative flow change = 0.000002
-                        maximum  flow change = 0.0005 for Link Reducer
+                        maximum  flow change = 0.0005 for Link GV_0001
                         maximum  head error  = 0.0000 for Link RIKO
 
     28:00:00: Balanced after 3 trials
@@ -335,7 +335,7 @@
               Trial  1: relative flow change = 0.075623
               Trial  2: relative flow change = 0.002812
               Trial  3: relative flow change = 0.000004
-                        maximum  flow change = 0.0008 for Link GV_0001
+                        maximum  flow change = 0.0008 for Link GV_0003
                         maximum  head error  = 0.0000 for Link RIKO
 
     29:00:00: Balanced after 3 trials
@@ -358,7 +358,7 @@
               Trial  2: relative flow change = 0.004962
               Trial  3: relative flow change = 0.000012
               Trial  4: relative flow change = 0.000000
-                        maximum  flow change = 0.0000 for Link GV_0003
+                        maximum  flow change = 0.0000 for Link PL_0004
                         maximum  head error  = 0.0000 for Link RIKO
 
     31:00:00: Balanced after 4 trials
@@ -370,7 +370,7 @@
               Trial  2: relative flow change = 0.006462
               Trial  3: relative flow change = 0.000021
               Trial  4: relative flow change = 0.000000
-                        maximum  flow change = 0.0000 for Link GV_0001
+                        maximum  flow change = 0.0000 for Link GV_0002
                         maximum  head error  = 0.0000 for Link RIKO
 
     32:00:00: Balanced after 4 trials
@@ -382,8 +382,8 @@
               Trial  2: relative flow change = 0.008287
               Trial  3: relative flow change = 0.000034
               Trial  4: relative flow change = 0.000000
-                        maximum  flow change = 0.0000 for Link PL_0001
-                        maximum  head error  = 0.0000 for Link GV_0001
+                        maximum  flow change = 0.0000 for Link Reducer
+                        maximum  head error  = 0.0000 for Link RIKO
 
     33:00:00: Balanced after 4 trials
    
@@ -394,7 +394,7 @@
               Trial  2: relative flow change = 0.010484
               Trial  3: relative flow change = 0.000055
               Trial  4: relative flow change = 0.000000
-                        maximum  flow change = 0.0000 for Link Reducer
+                        maximum  flow change = 0.0000 for Link PL_0002
                         maximum  head error  = 0.0000 for Link RIKO
 
     34:00:00: Balanced after 4 trials
@@ -406,8 +406,8 @@
               Trial  2: relative flow change = 0.013105
               Trial  3: relative flow change = 0.000085
               Trial  4: relative flow change = 0.000000
-                        maximum  flow change = 0.0000 for Link PL_0003
-                        maximum  head error  = 0.0000 for Link RIKO
+                        maximum  flow change = 0.0000 for Link PL_0004
+                        maximum  head error  = 0.0000 for Link PL_0002
 
     35:00:00: Balanced after 4 trials
    
@@ -418,8 +418,8 @@
               Trial  2: relative flow change = 0.016223
               Trial  3: relative flow change = 0.000131
               Trial  4: relative flow change = 0.000000
-                        maximum  flow change = 0.0000 for Link Diffuser
-                        maximum  head error  = 0.0000 for Link PL_0003
+                        maximum  flow change = 0.0000 for Link PL_0002
+                        maximum  head error  = 0.0000 for Link RIKO
 
     36:00:00: Balanced after 4 trials
    
@@ -430,7 +430,7 @@
               Trial  2: relative flow change = 0.019948
               Trial  3: relative flow change = 0.000198
               Trial  4: relative flow change = 0.000000
-                        maximum  flow change = 0.0000 for Link RIKO
+                        maximum  flow change = 0.0000 for Link Reducer
                         maximum  head error  = 0.0000 for Link RIKO
 
     37:00:00: Balanced after 4 trials
@@ -442,7 +442,7 @@
               Trial  2: relative flow change = 0.024453
               Trial  3: relative flow change = 0.000298
               Trial  4: relative flow change = 0.000000
-                        maximum  flow change = 0.0000 for Link RIKO
+                        maximum  flow change = 0.0000 for Link Reducer
                         maximum  head error  = 0.0000 for Link RIKO
 
     38:00:00: Balanced after 4 trials
@@ -454,7 +454,7 @@
               Trial  2: relative flow change = 0.030001
               Trial  3: relative flow change = 0.000449
               Trial  4: relative flow change = 0.000000
-                        maximum  flow change = 0.0000 for Link PL_0004
+                        maximum  flow change = 0.0000 for Link Diffuser
                         maximum  head error  = 0.0000 for Link RIKO
 
     39:00:00: Balanced after 4 trials
@@ -466,7 +466,7 @@
               Trial  2: relative flow change = 0.036994
               Trial  3: relative flow change = 0.000684
               Trial  4: relative flow change = 0.000000
-                        maximum  flow change = 0.0000 for Link PL_0004
+                        maximum  flow change = 0.0000 for Link Diffuser
                         maximum  head error  = 0.0000 for Link RIKO
 
     40:00:00: Balanced after 4 trials
@@ -478,7 +478,7 @@
               Trial  2: relative flow change = 0.046071
               Trial  3: relative flow change = 0.001062
               Trial  4: relative flow change = 0.000001
-                        maximum  flow change = 0.0000 for Link Reducer
+                        maximum  flow change = 0.0000 for Link PL_0003
                         maximum  head error  = 0.0000 for Link RIKO
 
     41:00:00: Balanced after 4 trials
@@ -490,7 +490,7 @@
               Trial  2: relative flow change = 0.058253
               Trial  3: relative flow change = 0.001699
               Trial  4: relative flow change = 0.000001
-                        maximum  flow change = 0.0000 for Link Reducer
+                        maximum  flow change = 0.0000 for Link RIKO
                         maximum  head error  = 0.0000 for Link RIKO
 
     42:00:00: Balanced after 4 trials
@@ -502,7 +502,7 @@
               Trial  2: relative flow change = 0.075257
               Trial  3: relative flow change = 0.002839
               Trial  4: relative flow change = 0.000004
-                        maximum  flow change = 0.0000 for Link PL_0001
+                        maximum  flow change = 0.0000 for Link Reducer
                         maximum  head error  = 0.0000 for Link RIKO
 
     43:00:00: Balanced after 4 trials
@@ -529,7 +529,7 @@
               Trial  4: relative flow change = 0.000047
               Trial  5: relative flow change = 0.000000
                         maximum  flow change = 0.0000 for Link PL_0004
-                        maximum  head error  = 0.0000 for Link PL_0003
+                        maximum  head error  = 0.0000 for Link RIKO
 
     45:00:00: Balanced after 5 trials
    
@@ -541,7 +541,7 @@
               Trial  3: relative flow change = 0.020907
               Trial  4: relative flow change = 0.000219
               Trial  5: relative flow change = 0.000000
-                        maximum  flow change = 0.0000 for Link Diffuser
+                        maximum  flow change = 0.0000 for Link Reducer
                         maximum  head error  = 0.0000 for Link RIKO
 
     46:00:00: Balanced after 5 trials
@@ -554,7 +554,7 @@
               Trial  3: relative flow change = 0.052922
               Trial  4: relative flow change = 0.001402
               Trial  5: relative flow change = 0.000001
-                        maximum  flow change = 0.0000 for Link GV_0001
+                        maximum  flow change = 0.0000 for Link PL_0001
                         maximum  head error  = 0.0000 for Link RIKO
 
     47:00:00: Balanced after 5 trials
@@ -568,7 +568,7 @@
               Trial  4: relative flow change = 0.014309
               Trial  5: relative flow change = 0.000102
               Trial  6: relative flow change = 0.000000
-                        maximum  flow change = 0.0000 for Link Reducer
+                        maximum  flow change = 0.0000 for Link PL_0001
                         maximum  head error  = 0.0000 for Link RIKO
 
     48:00:00: Balanced after 6 trials
@@ -578,12 +578,12 @@
 
               Trial  1: relative flow change = 0.968203
               Trial  2: relative flow change = 0.882205
-              Trial  3: relative flow change = 0.637045
-              Trial  4: relative flow change = 0.254569
-              Trial  5: relative flow change = 0.033485
-              Trial  6: relative flow change = 0.000562
-              Trial  7: relative flow change = 0.000000
-                        maximum  flow change = 0.0000 for Link PL_0003
+              Trial  3: relative flow change = 0.637044
+              Trial  4: relative flow change = 0.254568
+              Trial  5: relative flow change = 0.033487
+              Trial  6: relative flow change = 0.000561
+              Trial  7: relative flow change = 0.000001
+                        maximum  flow change = 0.0000 for Link GV_0001
                         maximum  head error  = 0.0000 for Link RIKO
 
     49:00:00: Balanced after 7 trials
@@ -1438,4 +1438,4 @@
   ----------------------------------------------
   RIKO                 0.03      0.00     95.00  TCV
    
-  Analysis ended Sun Feb 20 17:47:11 2022
+  Analysis ended Mon Feb 21 14:52:01 2022
