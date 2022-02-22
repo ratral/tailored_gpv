@@ -18,6 +18,12 @@ bibliography: ["references.bib", "norms.bib"]
 csl: din-1505-2-numeric-alphabetical.csl
 citation_package: biblatex
 link-citations: yes
+params:
+  epanet.file: "exercise_01_Res2Res.inp"
+  valve.brand: "AVK-AC.MOO-PAM"
+  cyl.name:    "PSEG"
+  valve.id:    "RIKO"
+
 abstract: "The scope of this With paper is to provide guidelines for designing the Inherent Control Valve Flow Characteristics in such a way as to allow linear Installed Flow Characteristics."
 ---
 
@@ -55,6 +61,22 @@ source(here::here("R", "plotly_zv.R"))
 
 ```
 
+```{r}
+
+  epanet.file <- read.inp(here::here("epanet",params$epanet.file))
+
+  control.valve <- epanet.file$Valves %>% filter(ID == params$valve.id)
+  
+  params$dn <- control.valve$Diameter[1] # Diameter of the valve 
+
+  tb <- hyd4gpv:::gpv_data %>% 
+    filter(brand == params$valve.brand & cyl_name == params$cyl.name & 
+           dn_min <= params$dn & params$dn <= dn_max) %>% 
+    select(description_en, kv_b, kv_d, kv_e, zvs, fls)
+```
+
+
+
 # Scope
 
 The inherent and installed flow characteristic, the relationship between flow coefficient and valve stroke, has been a subject of misunderstandings and endless debate with water transport and distribution systems operators. 
@@ -80,13 +102,6 @@ It is a simple water transport system between two reservoirs, which are $500 \; 
 
 ```{r figure_sample_01, out.width='100%', fig.align='center', fig.cap='Flow Schematic'}
     knitr::include_graphics(here::here("images","figure_01.jpg"))
-```
-```{r}
-  dn <- 250 # Diameter of the valve 
-
-  tb <- hyd4gpv:::gpv_data %>% 
-    filter(brand == "AVK-AC.MOO-PAM" & cyl_name == "PSEG" & dn_min <= dn & dn <= dn_max) %>% 
-    select(description_en, kv_b, kv_d, kv_e, zvs, fls)
 ```
 
 Without the control system, the maximum flow possible the line gives and losses due to fittings and pipe are $370.53\;l/s$. If a "Standard" plunger control valve with a flat portable cylinder is installed in the system, the maximum flow that will circulate through the transport systems will be $369.18\; l/s$ -with a Zeta value of $\zeta_{100\%}=3.8$ and an additional gate valve with a Zeta value of $\zeta_{gate}=0.233$.
