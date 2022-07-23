@@ -21,10 +21,10 @@ plot_zv <- function(b, d, e, zvs, cylindertyp){
     scale_y_log10() +
     scale_x_continuous( breaks = seq(0, 100, 10)) +
     annotation_logticks(sides = "lr") +
-    labs( title    = TeX('Zeta Value Curve $\\zeta_{v}$'),
+    labs( title    = latex2exp::TeX('Zeta Value Curve $\\zeta_{v}$'),
           # subtitle = paste("Flow characteristics :", cylindertyp),
           # caption  = "Dr.Trujillo",
           x        = "Opening degree (%)",
-          y        = TeX('$\\zeta_{v}$')) +
+          y        = latex2exp::TeX('$\\zeta_{v}$')) +
     theme_bw()
 }

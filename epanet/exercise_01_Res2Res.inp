@@ -5,162 +5,156 @@ Typ: Reservoir to reservoir
 Modell_Name: Res2Res_V001
 
 [JUNCTIONS]
-;ID              	Elev        	Demand      	Pattern         
- JT_0001         	95          	0           	                	;
- JT_0002         	95          	0           	                	;
- JT_0003         	0           	0           	                	;
- JT_0004         	0           	0           	                	;
- JT_0006         	0           	0           	                	;
- JT_0007         	0           	0           	                	;
- JT_0009         	0           	0           	                	;
- JT_0005         	0           	0           	                	;
- JT_0008         	0           	0           	                	;
-
-[RESERVOIRS]
-;ID              	Head        	Pattern         
- RES_001         	100         	                	;
- RES_002         	5           	                	;
+JT_0001	95	0	
+JT_0002	95	0	
+JT_0003	0	0	
+JT_0004	0	0	
+JT_0006	0	0	
+JT_0007	0	0	
+JT_0009	0	0	
+JT_0005	0	0	
+JT_0008	0	0	
 
 [TANKS]
-;ID              	Elevation   	InitLevel   	MinLevel    	MaxLevel    	Diameter    	MinVol      	VolCurve        	Overflow
+
+[RESERVOIRS]
+RES_001	100	
+RES_002	5	
 
 [PIPES]
-;ID              	Node1           	Node2           	Length      	Diameter    	Roughness   	MinorLoss   	Status
- PL_0001         	RES_001         	JT_0001         	1           	250         	0.015       	1           	Open  	;
- PL_0002         	JT_0002         	JT_0003         	250         	250         	0.015       	2           	Open  	;
- PL_0003         	JT_0003         	JT_0004         	250         	250         	0.015       	2           	Open  	;
- Reducer         	JT_0005         	JT_0006         	1           	250         	0.015       	0           	Open  	;
- Diffuser        	JT_0007         	JT_0008         	1           	250         	0.015       	0           	Open  	;
- PL_0004         	JT_0009         	RES_002         	5           	250         	0.015       	2.5         	Open  	;
+PL_0001	RES_001	JT_0001	1	250	0.015	1	Open
+PL_0002	JT_0002	JT_0003	250	250	0.015	2	Open
+PL_0003	JT_0003	JT_0004	250	250	0.015	2	Open
+Reducer	JT_0005	JT_0006	1	250	0.015	0	Open
+Diffuser	JT_0007	JT_0008	1	250	0.015	0	Open
+PL_0004	JT_0009	RES_002	5	250	0.015	2.5	Open
 
 [PUMPS]
-;ID              	Node1           	Node2           	Parameters
 
 [VALVES]
-;ID              	Node1           	Node2           	Diameter    	Type	Setting     	MinorLoss   
- RIKO            	JT_0006         	JT_0007         	250         	TCV 	350         	0           	;
- GV_0001         	JT_0001         	JT_0002         	250         	TCV 	0.233       	0           	;
- GV_0002         	JT_0004         	JT_0005         	250         	TCV 	0.233       	0           	;
- GV_0003         	JT_0008         	JT_0009         	250         	TCV 	0.233       	0           	;
-
-[TAGS]
+RIKO	JT_0006	JT_0007	250	TCV	350	0
+GV_0001	JT_0001	JT_0002	250	TCV	0.233	0
+GV_0002	JT_0004	JT_0005	250	TCV	0.233	0
+GV_0003	JT_0008	JT_0009	250	TCV	0.233	0
 
 [DEMANDS]
-;Junction        	Demand      	Pattern         	Category
-
-[STATUS]
-;ID              	Status/Setting
- RIKO            	Open
 
 [PATTERNS]
-;ID              	Multipliers
+
+
 
 [CURVES]
-;ID              	X-Value     	Y-Value
 
 [CONTROLS]
-; Initial position time 0
+LINK RIKO OPEN AT TIME 0; without Valve
+LINK RIKO 3.39 AT TIME 1; 100% opening
+LINK RIKO 3.72 AT TIME 2; 95% opening
+LINK RIKO 4.15 AT TIME 3; 90% opening
+LINK RIKO 4.73 AT TIME 4; 85% opening
+LINK RIKO 5.5 AT TIME 5; 80% opening
+LINK RIKO 6.58 AT TIME 6; 75% opening
+LINK RIKO 8.14 AT TIME 7; 70% opening
+LINK RIKO 10.46 AT TIME 8; 65% opening
+LINK RIKO 14.08 AT TIME 9; 60% opening
+LINK RIKO 20.03 AT TIME 10; 55% opening
+LINK RIKO 30.41 AT TIME 11; 50% opening
+LINK RIKO 49.9 AT TIME 12; 45% opening
+LINK RIKO 89.9 AT TIME 13; 40% opening
+LINK RIKO 181.46 AT TIME 14; 35% opening
+LINK RIKO 422.38 AT TIME 15; 30% opening
+LINK RIKO 1184.6 AT TIME 16; 25% opening
+LINK RIKO 4307.81 AT TIME 17; 20% opening
+LINK RIKO 23330.41 AT TIME 18; 15% opening
+LINK RIKO 257537.82 AT TIME 19; 10% opening
+LINK RIKO 15874332.91 AT TIME 20; 5% opening
 
 [RULES]
 
 [ENERGY]
- Global Efficiency  	75
- Global Price       	0
- Demand Charge      	0
+Global Efficiency 75
+Global Price 0
+Demand Charge 0
+
+[STATUS]
+RIKO	Open
 
 [EMITTERS]
-;Junction        	Coefficient
 
 [QUALITY]
-;Node            	InitQual
 
 [SOURCES]
-;Node            	Type        	Quality     	Pattern
 
 [REACTIONS]
-;Type     	Pipe/Tank       	Coefficient
-
-
-[REACTIONS]
- Order Bulk            	1
- Order Tank            	1
- Order Wall            	1
- Global Bulk           	0
- Global Wall           	0
- Limiting Potential    	0
- Roughness Correlation 	0
 
 [MIXING]
-;Tank            	Model
 
 [TIMES]
- Duration              49:00
- Hydraulic Timestep 	1:00
- Quality Timestep   	0:05 
- Pattern Timestep   	1:00 
- Pattern Start      	0:00 
- Report Timestep    	1:00 
- Report Start       	0:00 
- Start ClockTime    	12 am
- Statistic          	NONE
+Duration 20:00
+Hydraulic Timestep 1:00
+Quality Timestep 0:05
+Pattern Timestep 1:00
+Pattern Start 0:00
+Report Timestep 1:00
+Report Timestep 0:00
+Start ClockTime 12 am
+Statistic NONE
 
 [REPORT]
- Status             	FULL
- Summary            	No
- Page               	0
- nodes                  JT_0006 JT_0007
- links                  RIKO
+Status  FULL
+Summary Yes
+Energy Yes
+Page 0
+Nodes All
+Links All
+Pressure Precision 4
+Velocity Precision 4
+Flow Precision 4
+Headloss Precision 4
 
 [OPTIONS]
- Units              	LPS
- Headloss           	D-W
- Specific Gravity   	1
- Viscosity          	1.01552783053606
- Trials             	1000
- Accuracy           	0.00001
- CHECKFREQ          	2
- MAXCHECK           	10
- DAMPLIMIT          	0
- Unbalanced         	STOP
- Pattern            	RES_LEV
- Demand Multiplier  	1.0
- Emitter Exponent   	0.5
- Quality            	NONE mg/L
- Diffusivity        	1
- Tolerance          	0.01
+UNITS LPS
+HEADLOSS D-W
+QUALITY NONE
+VISCOSITY 1.01552783053606
+DIFFUSIVITY 1
+SPECIFIC GRAVITY 1
+TRIALS 1000
+ACCURACY 0.00001
+UNBALANCED STOP
+PATTERN RES_LEV
+DEMAND MULTIPLIER 1.0
+EMITTER EXPONENT 0.5
+TOLERANCE 0.01
 
 [COORDINATES]
-;Node            	X-Coord           	Y-Coord
-JT_0001         	-2039.560         	9000.000          
-JT_0002         	-1975.930         	9000.000          
-JT_0003         	-1595.910         	8650.000          
-JT_0004         	-1040.250         	8650.000          
-JT_0006         	-919.000          	8650.000          
-JT_0007         	-836.350          	8650.000          
-JT_0009         	-701.980          	8649.950          
-JT_0005         	-978.630          	8650.000          
-JT_0008         	-774.740          	8650.000          
-RES_001         	-2105.660         	9000.000          
-RES_002         	-605.570          	8650.000          
+JT_0001	-2039.56	9000
+JT_0002	-1975.93	9000
+JT_0003	-1595.91	8650
+JT_0004	-1040.25	8650
+JT_0006	-919	8650
+JT_0007	-836.35	8650
+JT_0009	-701.98	8649.95
+JT_0005	-978.63	8650
+JT_0008	-774.74	8650
+RES_001	-2105.66	9000
+RES_002	-605.57	8650
 
 [VERTICES]
-;Link            	X-Coord           	Y-Coord
 
 [LABELS]
-;X-Coord             Y-Coord             Label & Anchor Node
--936.060          	8682.150          	"CONTROL VALVE"	
--2041.810         	9030.570          	"Gate"	
--1025.690         	8682.150          	"Gate"	
--754.570          	8683.270          	"Gate"	
--974.150          	8638.460          	"Reducer"	
--826.270          	8641.820          	"Diffuser"	
--2130.310         	9030.566          	"Res. 01"	
--625.735          	8683.270          	"Res. 02"	
+-896.85	8686.63	RIKO	
+-2041.81	9030.57	Gate	
+-1025.69	8682.15	Gate	
+-754.57	8683.27	Gate	
+-974.15	8638.46	Reducer	
+-826.27	8641.82	Diffuser	
 
 [BACKDROP]
-  DIMENSIONS  	-2312.920         	8631.240          	-317.650          	9097.160          
- UNITS          	Meters
- FILE           	
- OFFSET         	0.00            	0.00            
+DIMENSIONS -2312.920 8631.240 -317.650 9097.160
+UNITS Meters
+FILE
+OFFSET 0.00 0.00
+
+[TAGS]
 
 [END]
