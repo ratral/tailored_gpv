@@ -1,5 +1,21 @@
+---
+author: "Dr. Raúl Trujillo Álvarez"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
 
-# Libraries----
+output: 
+   html_document:
+    self-contained: true
+---
+
+## Libraries
+
+-   `EPANET` is a computer program that performs extended period simulation of hydraulic and water quality behavior within pressurized pipe networks.EPANET Version 2.2 includes contributions from EPA and individuals outside the United States Government.
+
+-   `epanet2toolkit` is an R package for simulating water networks using Epanet. The package provides functions from the Epanet programmer's toolkit as R functions so that basic or customized simulations can be carried out from R. The package uses Epanet version 2.2 from Open Water Analytics.
+
+-   `epanetReader` is an R package for reading water network simulation data in Epanet's .inp and .rpt formats into R. Some basic summary information and plots are also provided.
+
+```{r}
 library(tidyverse)
 library(here)
 library(glue)
@@ -7,23 +23,35 @@ library(hyd4gpv)
 library(epanet2toolkit)
 library(epanetReader)
 
+library(kableExtra)
+```
 
-# Parmeter
+## Define base parameters
+
+-   Epanet Hydraulic model (.inp file): "exercise_01_Res2Res"
+-   Valve brand: "AVK-ACMO"
+-   Valve type: "PSEG"
+-   Valve name in Hydraulic model: "RIKO"
+
+```{r}
 params <- list(
   file.hmodel = "exercise_01_Res2Res",
   valve.brand = "AVK-ACMO",
   valve.cyl   = "PSEG",
   valve.id    = "RIKO" # Name in the epanet .inp file
 )
+```
 
+## Read basic about the control valve
 
+```{r}
 # Read Epanet model file; name in "params$file.hmodel"
 file.hmodel <- read.inp(here::here("epanet",
                                    paste0(params$file.hmodel,".inp")))
 
 # Read  from the epanet file the parameter of the control valve to evaluate.
 # The name of the control valve is in "params$valve.id"
-valve <- file.hmodel$Valves |> 
+valve <- file.hmodel$Valves  |>  
   filter(ID == params$valve.id)
 
 # Read Diameter of the valve.
@@ -35,6 +63,11 @@ params$valve.nodes <- c(valve[1,2], valve[1,3])
 # Remove control.valve
 rm(valve)
 
+```
+
+## Select the data kv curve parameters
+
+```{r}
 # Filter the control valves parameters table according to the brand, 
 # cylinder type, and diameter..
 params$valve.params <- hyd4gpv:::gpv_data |> 
@@ -42,7 +75,14 @@ params$valve.params <- hyd4gpv:::gpv_data |>
          cyl_name == params$valve.cyl) |> 
   filter(dn_min <= params$valve.dn &
          params$valve.dn <= dn_max)
+```
 
+## Generate the Zeta curve y generate the controls
+
+-   Defines **controls** that modify the **TCV** (throttle control valve) based on the Loss Coefficient ($\zeta$)
+-   The control changes the loss coefficient between $5\%$ and $100\%$ for each $5\%$ valve opening.
+
+```{r}
 # This part has the purpose of defining the controls that modify the 
 # loss coefficient of the control valve (link TCV throttle control valve) 
 # for the different opening positions of the valve (see file.hmodel$Times down).
@@ -69,6 +109,17 @@ file.hmodel$Controls <- c(
 # Remove zv4tcv
 rm(zv4tcv)
 
+```
+
+```{r}
+file.hmodel$Controls |> 
+  kbl() |> 
+  kable_styling()
+```
+
+## Parameter for the report generation
+
+```{r}
 # Trust is good, but control is better (see controls definitions)
 # length of Controls (zv4tcv)  must be the same of the duration Time:
 file.hmodel$Times <- c(
@@ -96,6 +147,17 @@ file.hmodel$Report <- c(
   "Headloss Precision 4"
 )
 
+```
+
+## Run modified hydraulic model
+
+-   Write the hydraulic model object to a .inp file
+
+-   Runs the complete EPANET simulation
+
+-   Reads the Epanet .rpt file into R
+
+```{r}
 # Write an epanet.inp object to params$file.hmodel
 write.inp(
   file.hmodel, 
@@ -111,6 +173,11 @@ ENepanet(
 # reads an Epanet .rpt file into R
 file.report <- read.rpt(here::here("epanet","exercise_01_Res2Res.rpt")) 
 
+```
+
+## Reading the upstream ($p_1$) and downstream pressure ($p_2$) at the Control Valve.
+
+```{r}
 # Values for the Nodes of the Valve
 nodes <- file.report$nodeResults  |> 
   filter(ID %in% params$valve.nodes) |> 
@@ -121,6 +188,17 @@ nodes <- file.report$nodeResults  |>
 
 names(nodes) <- c("position", "p1", "p2")
 
+```
+
+```{r}
+nodes |> 
+  kbl(caption = "Upstream and Downstream Pressure in bar") |> 
+  kable_paper(bootstrap_options = "striped", full_width = F)
+```
+
+## Extracting Flow and velocity for the Control Valve
+
+```{r}
 # Values for the Valve (Link))
 links <- as_tibble( file.report$linkResults) |>  
   filter(ID == params$valve.id) |> 
@@ -136,6 +214,17 @@ links <- as_tibble( file.report$linkResults) |>
     dh.valve = dh.valve/10 # Convert Dp from m to bar
   ) 
 
+```
+
+```{r}
+links |> 
+  kbl(caption = "Values of Flow (m3/h), Velocity (m/s) and Head losses (bar) for the Control Valve") |> 
+  kable_paper(bootstrap_options = "striped", full_width = F)
+```
+
+## Calculation of the $k_v$ for every possition
+
+```{r}
 # join NODES with the LINKS
 params$operat.values <- nodes |> 
   full_join(links, by ="position") |> 
@@ -155,35 +244,11 @@ params$operat.values <- params$operat.values |>
 
 rm(nodes, links)
 
-# System Data
-system.oprt <- file.report$nodeResults |> 
-  select(position = Timestamp, Head) |> 
-  mutate(position = as.integer(str_extract(position, "^(\\d+)*"))) |> 
-  filter(position > 0) |> 
-  group_by(position) |>
-  summarise(
-    h1 = max(Head),
-    h2 = min(Head),
-    dh.system = max(Head)- min(Head)) |>  
-  mutate(
-    position = seq(100, 5, by = -5)
-  )  
-  
-# join NODES with the LINKS
-params$operat.values <- params$operat.values |> 
-  full_join(system.oprt, by ="position") |> 
-  mutate(
-    kv.sys = kv(h1, h2, flow),
-    kv.sys.rel = kv.sys/max(kv.sys)*100
-  ) |> 
-  select(
-    position, p1, p2, dh.valve, 
-    h1, h2, dh.system, 
-    flow, velocity, 
-    kv.valve, kv.valve.rel,
-    kv.sys, kv.sys.rel
-  )
+```
 
-rm(system.oprt)
-
-# params$operat.values
+```{r}
+params$operat.values |> 
+  kbl(caption = "Kv and Kv/Kvs values") |> 
+  kable_paper(bootstrap_options = "striped", full_width = F) |> 
+  footnote(general = "The Kv value expresses the amount of flow in a regulating valve at a given valve position with a pressure loss of 1 bar. The special situation with a fully open valve determines the Kvs value. ")
+```
